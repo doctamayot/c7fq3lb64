@@ -1,5 +1,6 @@
 <div class="container">
   <div class="row">
+  
     <div class="col-sm-3">
       <%= form_tag expenses_path, method: :get do %>
         <div class="form-group">
@@ -22,7 +23,9 @@
           </tr>
         </thead>
         <tbody>
+        
           <% @expenses.each do |expense| %>
+          <% if user_signed_in? && expense.user == current_user %>
             <tr>
               <td class="date">
                 <div class="day"><%= l(expense.date, format: "%d") %></div>
@@ -32,6 +35,9 @@
               <td class="category text-right"><%= expense.category.name %></td>
               <td class="text-right amount" style="width: 170px;"><%= number_to_currency(expense.amount, precision: 0) %></td>
             </tr>
+            
+          <% end %>
+          
           <% end %>
         </tbody>
       </table>
